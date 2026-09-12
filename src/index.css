@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  --color-band-low: #22c55e;
+  --color-band-moderate: #eab308;
+  --color-band-high: #f97316;
+  --color-band-critical: #ef4444;
+}
+
+/* min-height, not height: a fixed 100% turns #root into its own scroll
+   container, which strands content below the fold and stops mobile browsers
+   collapsing the address bar. The page itself must be the scroller. */
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Stop iOS from auto-inflating type in portrait. */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #020617;
+  -webkit-font-smoothing: antialiased;
+  /* Momentum scrolling without rubber-banding the whole page on iOS. */
+  overscroll-behavior-y: none;
+}
+
+/* Never let a wide element push the page sideways on a narrow phone.
+   `clip` rather than `hidden` — hidden would make #root a scroll container. */
+#root {
+  overflow-x: clip;
+}
+
+/* Large touch targets: anything interactive clears the 44px minimum. */
+button,
+label,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+/* --- Leaflet: match the dark UI ------------------------------------- */
+
+.leaflet-container {
+  background: #0f172a;
+  font-family: inherit;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
+}
+
+.leaflet-popup-content {
+  margin: 0.75rem 1rem;
+}
+
+.leaflet-control-attribution {
+  background: rgb(15 23 42 / 0.85) !important;
+  color: #94a3b8 !important;
+  font-size: 10px;
+}
+
+.leaflet-control-attribution a {
+  color: #cbd5e1 !important;
+}
+
+.leaflet-control-zoom a {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+/* Circle markers animate their radius/opacity via a CSS transition. */
+.leaflet-interactive.transition-all {
+  transition:
+    r 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    fill-opacity 700ms ease-out,
+    stroke-width 700ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .leaflet-interactive.transition-all {
+    transition: none;
+  }
+}

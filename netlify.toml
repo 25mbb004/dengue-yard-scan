@@ -1,0 +1,20 @@
+# Netlify deployment config.
+#
+# The project's primary target is Vercel (vercel.json, /api/scan.js). This file
+# lets the same codebase deploy to Netlify for preview/testing; the function in
+# netlify/functions/scan.mjs adapts the Vercel handler to Netlify's signature.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# SPA fallback. The function's own config.path (/api/scan) takes precedence,
+# so API calls are not swallowed by this rule.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
